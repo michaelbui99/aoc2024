@@ -10,5 +10,6 @@ public class App {
     public static void main(String[] args) {
         DayExecutable executable = new Day1Executable();
         executable.execPuzzleOne();
+        executable.execPuzzleTwo();
     }
 }
