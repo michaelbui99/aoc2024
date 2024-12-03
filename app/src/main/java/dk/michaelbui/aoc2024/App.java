@@ -3,12 +3,12 @@
  */
 package dk.michaelbui.aoc2024;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+import dk.michaelbui.aoc2024.exec.Day1Executable;
+import dk.michaelbui.aoc2024.exec.DayExecutable;
 
+public class App {
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        DayExecutable executable = new Day1Executable();
+        executable.execPuzzleOne();
     }
 }

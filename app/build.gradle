@@ -15,7 +15,7 @@ repositories {
     mavenCentral()
 }
 
-def MAIN_CLASS = "dk.michaelbui.aoc024"
+def MAIN_CLASS ='dk.michaelbui.aoc2024.App'
 
 dependencies {
     // Use JUnit Jupiter for testing.
