@@ -35,7 +35,14 @@ public class Report {
 
     public boolean isSafe() {
         if (state == NEUTRAL) {
-            return false;
+            if (dampener == null) {
+                return false;
+            }
+            if (!dampener.consume(levels, 0).isSafe()) {
+                return dampener.consume(levels, 0).isSafe();
+            } else {
+                return true;
+            }
         }
 
         for (int i = 0; i < levels.size(); i++) {
@@ -45,11 +52,26 @@ public class Report {
 
             // Levels are either not all increasing or not all decreasing
             if (getLevelState(levels.get(i), levels.get(i + 1)) != state) {
-                return false;
+                if (dampener == null) {
+                    return false;
+                }
+                if (!dampener.consume(levels, i).isSafe()) {
+                    return dampener.consume(levels, i + 1).isSafe();
+                } else {
+                    return true;
+                }
             }
 
             if (!isSafeLevelChange(levels.get(i), levels.get(i + 1))) {
-                return false;
+                if (dampener == null) {
+                    return false;
+                }
+
+                if (!dampener.consume(levels, i).isSafe()) {
+                    return dampener.consume(levels, i + 1).isSafe();
+                } else {
+                    return true;
+                }
             }
         }
 
@@ -62,6 +84,11 @@ public class Report {
     }
 
     private void initState() {
+        if (levels.size() == 1) {
+            state = NEUTRAL;
+            return;
+        }
+
         state = getLevelState(levels.get(0), levels.get(1));
     }
 
