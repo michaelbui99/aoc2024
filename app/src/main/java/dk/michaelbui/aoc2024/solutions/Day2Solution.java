@@ -1,4 +1,4 @@
-package dk.michaelbui.aoc2024.exec;
+package dk.michaelbui.aoc2024.solutions;
 
 import dk.michaelbui.aoc2024.io.PuzzleInputReader;
 import dk.michaelbui.aoc2024.models.Report;
@@ -6,15 +6,15 @@ import dk.michaelbui.aoc2024.models.ReportBuilder;
 
 import java.util.List;
 
-public class Day2Executable implements DayExecutable {
+public class Day2Solution implements Solution {
     private PuzzleInputReader inputReader = new PuzzleInputReader("input_day2.txt");
 
-    public Day2Executable() {
+    public Day2Solution() {
     }
 
 
     @Override
-    public void execPuzzleOne() {
+    public void solvePuzzleOne() {
         List<String> inputs = inputReader.read();
         // O(n)
         long answer = inputs.stream()
@@ -26,7 +26,7 @@ public class Day2Executable implements DayExecutable {
     }
 
     @Override
-    public void execPuzzleTwo() {
+    public void solvePuzzleTwo() {
         List<String> inputs = inputReader.read();
         // Kinda nasty brute force, O(n^2)
         long answer = inputs.stream()
