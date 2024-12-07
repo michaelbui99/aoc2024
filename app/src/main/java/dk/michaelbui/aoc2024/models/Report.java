@@ -38,11 +38,7 @@ public class Report {
             if (dampener == null) {
                 return false;
             }
-            if (!dampener.consume(levels, 0).isSafe()) {
-                return dampener.consume(levels, 0).isSafe();
-            } else {
-                return true;
-            }
+            return isSafeWithDampener();
         }
 
         for (int i = 0; i < levels.size(); i++) {
@@ -55,11 +51,7 @@ public class Report {
                 if (dampener == null) {
                     return false;
                 }
-                if (!dampener.consume(levels, i).isSafe()) {
-                    return dampener.consume(levels, i + 1).isSafe();
-                } else {
-                    return true;
-                }
+                return isSafeWithDampener();
             }
 
             if (!isSafeLevelChange(levels.get(i), levels.get(i + 1))) {
@@ -67,11 +59,7 @@ public class Report {
                     return false;
                 }
 
-                if (!dampener.consume(levels, i).isSafe()) {
-                    return dampener.consume(levels, i + 1).isSafe();
-                } else {
-                    return true;
-                }
+                return isSafeWithDampener();
             }
         }
 
@@ -102,5 +90,15 @@ public class Report {
         }
 
         return NEUTRAL;
+    }
+
+    private boolean isSafeWithDampener() {
+        List<Boolean> isSafeEvaluations = new ArrayList<>();
+        for (int i = 0; i < levels.size(); i++) {
+            isSafeEvaluations.add(dampener.consume(levels, i).isSafe());
+        }
+
+        return isSafeEvaluations.stream()
+                .anyMatch(res -> res);
     }
 }
