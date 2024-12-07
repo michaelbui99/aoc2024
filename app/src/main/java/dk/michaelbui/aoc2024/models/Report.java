@@ -38,7 +38,7 @@ public class Report {
             if (dampener == null) {
                 return false;
             }
-            return isSafeWithDampener();
+            return dampener.reportIsSafe(this);
         }
 
         for (int i = 0; i < levels.size(); i++) {
@@ -51,7 +51,7 @@ public class Report {
                 if (dampener == null) {
                     return false;
                 }
-                return isSafeWithDampener();
+                return dampener.reportIsSafe(this);
             }
 
             if (!isSafeLevelChange(levels.get(i), levels.get(i + 1))) {
@@ -59,11 +59,15 @@ public class Report {
                     return false;
                 }
 
-                return isSafeWithDampener();
+                return dampener.reportIsSafe(this);
             }
         }
 
         return true;
+    }
+
+    public List<Integer> getLevels() {
+        return levels;
     }
 
     private boolean isSafeLevelChange(int a, int b) {
@@ -90,15 +94,5 @@ public class Report {
         }
 
         return NEUTRAL;
-    }
-
-    private boolean isSafeWithDampener() {
-        List<Boolean> isSafeEvaluations = new ArrayList<>();
-        for (int i = 0; i < levels.size(); i++) {
-            isSafeEvaluations.add(dampener.consume(levels, i).isSafe());
-        }
-
-        return isSafeEvaluations.stream()
-                .anyMatch(res -> res);
     }
 }
