@@ -4,11 +4,12 @@
 package dk.michaelbui.aoc2024;
 
 import dk.michaelbui.aoc2024.solutions.Day2Solution;
+import dk.michaelbui.aoc2024.solutions.Day3Solution;
 import dk.michaelbui.aoc2024.solutions.Solution;
 
 public class App {
     public static void main(String[] args) {
-        Solution solution = new Day2Solution();
+        Solution solution = new Day3Solution();
         solution.solvePuzzleOne();
         solution.solvePuzzleTwo();
     }

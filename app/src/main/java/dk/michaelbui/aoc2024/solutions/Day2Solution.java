@@ -1,8 +1,8 @@
 package dk.michaelbui.aoc2024.solutions;
 
 import dk.michaelbui.aoc2024.io.PuzzleInputReader;
-import dk.michaelbui.aoc2024.models.Report;
-import dk.michaelbui.aoc2024.models.ReportBuilder;
+import dk.michaelbui.aoc2024.models.report.Report;
+import dk.michaelbui.aoc2024.models.report.ReportBuilder;
 
 import java.util.List;
 

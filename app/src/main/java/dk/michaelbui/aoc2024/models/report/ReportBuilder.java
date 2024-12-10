@@ -1,4 +1,4 @@
-package dk.michaelbui.aoc2024.models;
+package dk.michaelbui.aoc2024.models.report;
 
 public class ReportBuilder {
     private String levels;

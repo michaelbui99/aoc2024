@@ -1,5 +1,7 @@
 package dk.michaelbui.aoc2024.models;
 
+import dk.michaelbui.aoc2024.models.report.Report;
+import dk.michaelbui.aoc2024.models.report.ReportBuilder;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
