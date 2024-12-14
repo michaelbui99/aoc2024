@@ -1,6 +1,6 @@
 package dk.michaelbui.aoc2024.models.instruction;
 
-public class MulInstruction {
+public class MulInstruction implements Instruction {
     private int a;
     private int b;
 

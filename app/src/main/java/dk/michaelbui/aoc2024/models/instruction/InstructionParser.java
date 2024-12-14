@@ -15,14 +15,15 @@ public class InstructionParser {
         consumeToken();
     }
 
-    public List<MulInstruction> parse() {
-        List<MulInstruction> instructions = new ArrayList<>();
+    public List<Instruction> parse() {
+        List<Instruction> instructions = new ArrayList<>();
 
         while (currentToken.getType() != InstructionTokenType.EOF) {
-            if (currentToken.getType() == InstructionTokenType.MUL) {
-                parseMulInstruction().ifPresent(instructions::add);
-            } else {
-                consumeToken();
+            switch (currentToken.getType()) {
+                case InstructionTokenType.MUL -> parseMulInstruction().ifPresent(instructions::add);
+                case InstructionTokenType.DONT -> parseDontInstruction().ifPresent(instructions::add);
+                case InstructionTokenType.DO -> parseDoInstruction().ifPresent(instructions::add);
+                default -> consumeToken();
             }
         }
 
@@ -31,8 +32,8 @@ public class InstructionParser {
 
     private Optional<MulInstruction> parseMulInstruction() {
         List<Boolean> acceptResults = new ArrayList<>();
-        consumeToken();
 
+        acceptResults.add(accept(InstructionTokenType.MUL));
         acceptResults.add(accept(InstructionTokenType.LEFT_PAREN));
 
         String digit1Candidate = currentToken.getSpelling();
@@ -50,6 +51,35 @@ public class InstructionParser {
         }
 
         return Optional.of(new MulInstruction(Integer.parseInt(digit1Candidate), Integer.parseInt(digit2Candidate)));
+    }
+
+
+    private Optional<DoInstruction> parseDoInstruction() {
+        List<Boolean> acceptResults = new ArrayList<>();
+
+        acceptResults.add(accept(InstructionTokenType.DO));
+        acceptResults.add(accept(InstructionTokenType.LEFT_PAREN));
+        acceptResults.add(accept(InstructionTokenType.RIGHT_PAREN));
+
+        if (!acceptResults.stream().allMatch(res -> res)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(new DoInstruction());
+    }
+
+    private Optional<DontInstruction> parseDontInstruction() {
+        List<Boolean> acceptResults = new ArrayList<>();
+
+        acceptResults.add(accept(InstructionTokenType.DONT));
+        acceptResults.add(accept(InstructionTokenType.LEFT_PAREN));
+        acceptResults.add(accept(InstructionTokenType.RIGHT_PAREN));
+
+        if (!acceptResults.stream().allMatch(res -> res)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(new DontInstruction());
     }
 
     private boolean accept(InstructionTokenType type) {

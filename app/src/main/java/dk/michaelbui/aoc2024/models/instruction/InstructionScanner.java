@@ -29,6 +29,23 @@ public class InstructionScanner {
                 }
                 readIdx += 3;
                 continue;
+            } else if (c == 'd') {
+                if (peekAhead(1) != 'o') {
+                    tokens.add(new InstructionToken(String.valueOf(c), InstructionTokenType.UNKNOWN));
+                    readIdx++;
+                    continue;
+                }
+
+                String dontCandidate = String.format("d%s%s%s%s", peekAhead(1), peekAhead(2), peekAhead(3), peekAhead(4));
+                if (dontCandidate.equals("don't")) {
+                    tokens.add(new InstructionToken("don't", InstructionTokenType.DONT));
+                    readIdx += 5;
+                    continue;
+                }
+
+                tokens.add(new InstructionToken("do", InstructionTokenType.DO));
+                readIdx += 2;
+                continue;
             } else if (c == ',') {
                 tokens.add(new InstructionToken(String.valueOf(c), InstructionTokenType.COMMA));
             } else if (c == ' ') {
@@ -40,7 +57,7 @@ public class InstructionScanner {
                     finalDigit.append(this.peekAhead(peekAmount));
                     peekAmount++;
                 }
-                readIdx += peekAmount-1;
+                readIdx += peekAmount - 1;
                 tokens.add(new InstructionToken(finalDigit.toString(), InstructionTokenType.DIGIT));
             } else {
                 tokens.add(new InstructionToken(String.valueOf(c), InstructionTokenType.UNKNOWN));
