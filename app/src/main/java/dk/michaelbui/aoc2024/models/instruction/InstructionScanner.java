@@ -34,7 +34,14 @@ public class InstructionScanner {
             } else if (c == ' ') {
                 tokens.add(new InstructionToken(String.valueOf(c), InstructionTokenType.WHITESPACE));
             } else if (Character.isDigit(c)) {
-                tokens.add(new InstructionToken(String.valueOf(c), InstructionTokenType.DIGIT));
+                int peekAmount = 0;
+                StringBuilder finalDigit = new StringBuilder();
+                while (Character.isDigit(this.peekAhead(peekAmount))) {
+                    finalDigit.append(this.peekAhead(peekAmount));
+                    peekAmount++;
+                }
+                readIdx += peekAmount-1;
+                tokens.add(new InstructionToken(finalDigit.toString(), InstructionTokenType.DIGIT));
             } else {
                 tokens.add(new InstructionToken(String.valueOf(c), InstructionTokenType.UNKNOWN));
             }

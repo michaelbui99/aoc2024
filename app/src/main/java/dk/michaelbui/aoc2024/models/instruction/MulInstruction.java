@@ -12,4 +12,9 @@ public class MulInstruction {
     public int evaluate() {
         return a * b;
     }
+
+    @Override
+    public String toString() {
+        return String.format("mul(%s,%s)", a, b);
+    }
 }
